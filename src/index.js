@@ -3,10 +3,17 @@ import { createServer } from "http";
 import { initGraphQL } from "./graphql/index.js";
 import { httpRouter } from "./http/index.js";
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 const httpServer = createServer(app);
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", ["*"]);
+  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 await initGraphQL(app, httpServer);
 

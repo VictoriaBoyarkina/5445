@@ -8,10 +8,11 @@ const __dirname = dirname(__filename);
 
 const router = express.Router();
 
-router.get("/test", (req, res) => {
-  res.send({ test: "er222" });
+router.get("/redirect", (req, res) => {
+  console.log(req.headers);
+  res.writeHead(302, { Location: `http://localhost:4000/http/static-page` });
+  res.end();
 });
-
 router.get("/static-page", (req, res) => {
   const content = readFileSync(__dirname + "/static/index.html");
 
