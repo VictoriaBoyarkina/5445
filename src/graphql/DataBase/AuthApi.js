@@ -1,32 +1,32 @@
-import jwt from 'jsonwebtoken'
-import { GraphQLError  } from 'graphql'
+import jwt from "jsonwebtoken";
+import { GraphQLError } from "graphql";
 
-const secret = 'secret'
+const secret = "secret";
 
 export class AuthApi {
-    static generateToken(id) {
-        // 1h
-        const token = jwt.sign({ id }, secret, { expiresIn: 60 * 60 })
+  static generateToken(id) {
+    // 1h
+    const token = jwt.sign({ id }, secret, { expiresIn: 60 * 60 });
 
-        return token
+    return token;
+  }
+
+  static validToken(headerValue) {
+    try {
+      const token = headerValue.replace("Bearer ", "");
+      const decoded = jwt.verify(token, secret);
+
+      return {
+        isAuth: true,
+        id: decoded.id,
+      };
+    } catch {
+      throw new GraphQLError("User is not authenticated", {
+        extensions: {
+          code: "UNAUTHENTICATED",
+          http: { status: 401 },
+        },
+      });
     }
-
-    static validToken(headerValue) {
-        try {
-            const token = headerValue.replace('Bearer ', '')
-            const decoded = jwt.verify(token, secret)
-
-            return {
-                isAuth: true,
-                id: decoded.id
-            }
-        } catch {
-           throw new GraphQLError('User is not authenticated', {
-                extensions: {
-                    code: 'UNAUTHENTICATED',
-                    http: { status: 401 },
-                }
-            })
-        }
-    }
+  }
 }

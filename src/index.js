@@ -1,6 +1,8 @@
+import cookieParser from "cookie-parser";
 import express from "express";
 import { createServer } from "http";
 import { initGraphQL } from "./graphql/index.js";
+import cors from "cors";
 import { httpRouter } from "./http/index.js";
 
 const PORT = process.env.PORT || 4000;
@@ -8,10 +10,14 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 const httpServer = createServer(app);
 
+app.use(cookieParser());
+app.use(cors());
+
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", ["*"]);
+  res.setHeader("Access-Control-Allow-Origin", ["http://localhost:3000"]);
+  res.header("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // res.setHeader("Access-Control-Allow-Headers", ["Content-Type", "Accept"]);
   next();
 });
 
