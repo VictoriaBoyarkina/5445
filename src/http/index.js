@@ -25,4 +25,35 @@ router.post("/cookie", (req, res) => {
   res.json(req.cookies);
 });
 
+router.post("/json", (req, res) => {
+  const body = req.body || {};
+
+  if (!body.type) {
+    res.status(400);
+    res.json({
+      error: true,
+      message: 'field "type" is required',
+    });
+    return;
+  }
+
+  if (Object.keys(body).length === 1) {
+    res.status(400);
+    res.json({
+      error: true,
+      message: "В объекте должны быть ещё свойства кроме свойства `type`",
+    });
+    return;
+  }
+
+  if (body.type === "create") {
+    res.status(201);
+  }
+
+  res.json({
+    status: "success",
+    data: body,
+  });
+});
+
 export { router as httpRouter };

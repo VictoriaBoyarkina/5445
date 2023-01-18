@@ -4,6 +4,7 @@ import { createServer } from "http";
 import { initGraphQL } from "./graphql/index.js";
 import cors from "cors";
 import { httpRouter } from "./http/index.js";
+import bodyParser from "body-parser";
 
 const PORT = process.env.PORT || 4000;
 
@@ -12,6 +13,7 @@ const httpServer = createServer(app);
 
 app.use(cookieParser());
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", ["http://localhost:3000"]);
