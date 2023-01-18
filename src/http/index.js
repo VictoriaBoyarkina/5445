@@ -21,10 +21,6 @@ router.get("/static-page", (req, res) => {
   res.end(content);
 });
 
-router.post("/cookie", (req, res) => {
-  res.json(req.cookies);
-});
-
 router.post("/json", (req, res) => {
   const body = req.body || {};
 

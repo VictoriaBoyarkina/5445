@@ -5,6 +5,7 @@ import { initGraphQL } from "./graphql/index.js";
 import cors from "cors";
 import { httpRouter } from "./http/index.js";
 import bodyParser from "body-parser";
+import { cookieRouter } from "./cookie/index.js";
 
 const PORT = process.env.PORT || 4000;
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 await initGraphQL(app, httpServer);
 
 app.use("/http", httpRouter);
+app.use("/cookie", cookieRouter);
 
 app.get("/test", (req, res) => {
   res.send({ test: "er" });
