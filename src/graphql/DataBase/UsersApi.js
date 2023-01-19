@@ -53,7 +53,7 @@ export class UsersApi {
     if (!user)
       throw new GraphQLError("User not found", {
         extensions: {
-          code: "BADREQUEST",
+          code: "BAD_REQUEST",
           http: { status: 400 },
         },
       });

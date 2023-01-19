@@ -51,7 +51,7 @@ export class CardsApi {
     if (index < 0)
       throw new GraphQLError("Card not found", {
         extensions: {
-          code: "BADREQUEST",
+          code: "BAD_REQUEST",
           http: { status: 400 },
         },
       });
@@ -61,7 +61,7 @@ export class CardsApi {
     if (card.owner !== userId)
       throw new GraphQLError("Can't delete someone else's card", {
         extensions: {
-          code: "BADREQUEST",
+          code: "BAD_REQUEST",
           http: { status: 400 },
         },
       });

@@ -1,26 +1,34 @@
 import cookieParser from "cookie-parser";
 import express from "express";
 import { createServer } from "http";
-import { initGraphQL } from "./graphql/index.js";
 import cors from "cors";
+
+import { initGraphQL } from "./graphql/index.js";
 import { httpRouter } from "./http/index.js";
-import bodyParser from "body-parser";
 import { cookieRouter } from "./cookie/index.js";
+import { xhrRouter } from "./xhr/index.js";
+import { axiosRouter } from "./axios/index.js";
 
 const PORT = process.env.PORT || 4000;
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
 
 const app = express();
 const httpServer = createServer(app);
 
 app.use(cookieParser());
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+  })
+);
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", ["http://localhost:3000"]);
-  res.header("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", [CLIENT_URL]);
+  res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  // res.setHeader("Access-Control-Allow-Headers", ["Content-Type", "Accept"]);
   next();
 });
 
@@ -28,14 +36,17 @@ await initGraphQL(app, httpServer);
 
 app.use("/http", httpRouter);
 app.use("/cookie", cookieRouter);
-
-app.get("/test", (req, res) => {
-  res.send({ test: "er" });
-});
+app.use("/xhr", xhrRouter);
+app.use("/axios", axiosRouter);
 
 httpServer.listen(PORT, () => {
-  console.log(`🚀 Query endpoint ready at http://localhost:${PORT}/graphql`);
   console.log(
-    `🚀 Subscription endpoint ready at ws://localhost:${PORT}/subscription`
+    `✅ \x1b[35mServer is running on \x1b[36mhttp://localhost:${PORT}\x1b[0m`
+  );
+  console.log(
+    `✅ \x1b[35mGraphQL Query endpoint ready at \x1b[36mhttp://localhost:${PORT}/graphql\x1b[0m`
+  );
+  console.log(
+    `✅ \x1b[35mGraphQl Subscription endpoint ready at \x1b[36mws://localhost:${PORT}/subscription\x1b[0m`
   );
 });
