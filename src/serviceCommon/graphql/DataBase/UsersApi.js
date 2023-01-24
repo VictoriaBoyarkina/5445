@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { generateId, randomColor } from "../../utils.js";
+import { generateId, randomColor } from "../../../utils.js";
 
 const defaultUsers = [
   {

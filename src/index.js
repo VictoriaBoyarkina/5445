@@ -3,11 +3,12 @@ import express from "express";
 import { createServer } from "http";
 import cors from "cors";
 
-import { initGraphQL } from "./graphql/index.js";
-import { httpRouter } from "./http/index.js";
-import { cookieRouter } from "./cookie/index.js";
-import { xhrRouter } from "./xhr/index.js";
-import { axiosRouter } from "./axios/index.js";
+import { initGraphQL } from "./serviceCommon/graphql/index.js";
+import { httpRouter } from "./serviceCommon/http/index.js";
+import { cookieRouter } from "./serviceCommon/cookie/index.js";
+import { xhrRouter } from "./serviceCommon/xhr/index.js";
+import { axiosRouter } from "./serviceCommon/axios/index.js";
+import { notificationsRouter } from "./browserRare/notifications/index.js";
 
 const PORT = process.env.PORT || 4000;
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
@@ -38,6 +39,7 @@ app.use("/http", httpRouter);
 app.use("/cookie", cookieRouter);
 app.use("/xhr", xhrRouter);
 app.use("/axios", axiosRouter);
+app.use("/notifications", notificationsRouter);
 
 httpServer.listen(PORT, () => {
   console.log(

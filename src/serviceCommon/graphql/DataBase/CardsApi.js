@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { generateId } from "../../utils.js";
+import { generateId } from "../../../utils.js";
 
 const defaultCards = [
   {

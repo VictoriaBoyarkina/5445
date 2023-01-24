@@ -5,7 +5,7 @@ import { dirname } from "path";
 import { isEqual } from "lodash-es";
 import { createReadStream } from "fs";
 import { stat } from "fs/promises";
-import { upload } from "../utils.js";
+import { upload } from "../../utils.js";
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
