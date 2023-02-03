@@ -46,6 +46,13 @@ router.get("/file", async (req, res) => {
 });
 
 router.post("/upload", upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({
+      error: true,
+      message: "file is required",
+    });
+  }
+
   return res.json({
     path: req.file.path,
   });
