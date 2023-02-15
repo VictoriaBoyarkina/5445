@@ -9,6 +9,8 @@ import { cookieRouter } from "./serviceCommon/cookie/index.js";
 import { xhrRouter } from "./serviceCommon/xhr/index.js";
 import { axiosRouter } from "./serviceCommon/axios/index.js";
 import { notificationsRouter } from "./browserRare/notifications/index.js";
+import { rxjsRouter } from "./serviceRare/RxJS/index.js";
+import { reactRoutingGuardsRouter } from "./reactCommon/routingGuard/index.js";
 
 const PORT = process.env.PORT || 4000;
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
@@ -35,11 +37,24 @@ app.use((req, res, next) => {
 
 await initGraphQL(app, httpServer);
 
+/* Browser Rare START */
+app.use("/notifications", notificationsRouter);
+/* Browser Rare END */
+
+/* Service Common START */
 app.use("/http", httpRouter);
 app.use("/cookie", cookieRouter);
 app.use("/xhr", xhrRouter);
 app.use("/axios", axiosRouter);
-app.use("/notifications", notificationsRouter);
+/* Service Common END */
+
+/* Service Rare START */
+app.use("/rxjs", rxjsRouter);
+/* Service Rare END */
+
+/* React Common START */
+app.use("/reactGuard", reactRoutingGuardsRouter);
+/* React Common END */
 
 httpServer.listen(PORT, () => {
   console.log(
