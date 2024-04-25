@@ -1,5 +1,10 @@
 {
   "cSpell.words": [
     "webpush"
-  ]
+  ],
+  "prettier.configPath": "./.prettierrc.json",
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
