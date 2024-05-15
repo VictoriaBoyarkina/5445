@@ -7,6 +7,11 @@ const defaultUser = {
   password: 'test-password',
 };
 
+const cookieTokenOptions = {
+  httpOnly: true,
+  path: '/commonTask',
+};
+
 const tokenKey = 'token';
 const validToken =
   'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJudm9yb2J5b3YiLCJleHAiOjE3MTI4MTczNjEsInJvbGUiOiJVU0VSIn0.8dQRJtlVkHqhyRLldnnHW_MQK6NSd--VJoAJjpWSMnGsOCV96Gk7SHwhPqiXO5IoR2YSFJz3T2za8sqjPTEusA';
@@ -21,14 +26,9 @@ router.post('/login', (req, res) => {
     });
   }
 
-  return res
-    .cookie(tokenKey, validToken, {
-      httpOnly: true,
-      path: '/commonTask',
-    })
-    .json({
-      status: 'ok',
-    });
+  return res.cookie(tokenKey, validToken, cookieTokenOptions).json({
+    status: 'ok',
+  });
 });
 
 /** @type {import("express").RequestHandler} */
@@ -50,7 +50,7 @@ router.get('/user', commonTaskTokenCheck, (req, res) => {
 });
 
 router.delete('/logout', (req, res) => {
-  res.clearCookie(tokenKey).json({
+  res.clearCookie(tokenKey, cookieTokenOptions).json({
     status: 'ok',
   });
 });
