@@ -2,3 +2,4 @@
 /src/uploads
 .env
 .yarn/install-state.gz
+.yarn/cache
