@@ -57,7 +57,7 @@ router.get('/data', commonTaskTokenCheck, (req, res) => {
       names: {
         angel: '♂Billy♂',
         fullNameAngel: '♂Herrigton Billy♂',
-        tramp: '♂Van Darkholme♂',
+        trump: '♂Van Darkholme♂',
       },
     },
   });
