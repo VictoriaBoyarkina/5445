@@ -1,8 +1,15 @@
 # Репа с бэком для задач по разделу Service Common
 
-## Для работы использовать yarn и NodeJS 16 версии и выше.
+## Для работы использовать yarn и NodeJS 16 версии и выше
 
-## Запустить бэк - `yarn start`
+## Перед стартом
+
+- Выполнить команду `yarn generate-keys`
+- Сгенерированные `Public Key` и `Private Key` добавить в `.env` файл. `PUBLIC_VAPID_KEY={Public Key}` `PRIVATE_VAPID_KEY=Private Key`
+
+## Запустить бэк
+
+- `yarn start`
 
 Бэк запускается по адресу `localhost:4000`
 

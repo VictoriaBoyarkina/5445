@@ -1,7 +1,7 @@
-import multer from "multer";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-import { existsSync, mkdirSync } from "fs";
+import multer from 'multer';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -18,7 +18,7 @@ export const randomNumberRange = (min = 0, max = 100) => {
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const path = join(__dirname, "/uploads/");
+    const path = join(__dirname, '/uploads/');
 
     if (!existsSync(path)) {
       mkdirSync(path, { recursive: true });
@@ -31,3 +31,10 @@ const storage = multer.diskStorage({
 });
 
 export const upload = multer({ storage });
+
+/**
+ * @param {number} seconds
+ */
+export const sleep = (seconds) => {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+};

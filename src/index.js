@@ -15,6 +15,7 @@ import { initSocket } from './mentorTask/socket.js';
 import { chartDataRouter } from './mentorTask/chartData.js';
 import { authRouter } from './mentorTask/auth.js';
 import { templateDataRouter } from './mentorTask/template.js';
+import { antFormDictionariesRouter } from './antForms/dictionaries.js';
 
 const PORT = process.env.PORT || 4000;
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
@@ -66,6 +67,10 @@ app.use('/rxjs', rxjsRouter);
 /* React Common START */
 app.use('/reactGuard', reactRoutingGuardsRouter);
 /* React Common END */
+
+/* Ant Design Forms START */
+app.use('/ant-forms', antFormDictionariesRouter);
+/* Ant Design Forms END */
 
 httpServer.listen(PORT, () => {
   console.log(
