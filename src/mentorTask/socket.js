@@ -40,7 +40,7 @@ export function initSocket(app, httpServer) {
     });
   });
 
-  io.of('/ws/second').on('connection', (socket) => {
+  io.of('/second').on('connection', (socket) => {
     console.log('connect to SECOND data. ', socket.id);
 
     secondInterval = setInterval(() => {

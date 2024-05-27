@@ -1,5 +1,6 @@
 import express from 'express';
 import { commonTaskTokenCheck } from './auth.js';
+import { sleep } from '../utils.js';
 
 const router = express.Router();
 
@@ -53,7 +54,9 @@ export const lastYears = {
   second: startLastYear,
 };
 
-router.get('/', commonTaskTokenCheck, (req, res) => {
+router.get('/', commonTaskTokenCheck, async (req, res) => {
+  await sleep(2);
+
   if (initialChartData.length > 50) {
     lastYears.first = startLastYear;
     lastYears.second = startLastYear;
