@@ -1,5 +1,6 @@
 import express from 'express';
 import { commonTaskTokenCheck } from './auth.js';
+import { sleep } from '../utils.js';
 
 const router = express.Router();
 
@@ -29,14 +30,16 @@ const templateString = `
 Что он отправился в #{common.sounds.bar}!
 `;
 
-router.get('/string', commonTaskTokenCheck, (req, res) => {
+router.get('/string', commonTaskTokenCheck, async (req, res) => {
+  await sleep(1);
   res.json({
     status: 'ok',
     templateString,
   });
 });
 
-router.get('/data', commonTaskTokenCheck, (req, res) => {
+router.get('/data', commonTaskTokenCheck, async (req, res) => {
+  await sleep(1);
   res.json({
     status: 'ok',
     data: {

@@ -1,4 +1,5 @@
 import express from 'express';
+import { sleep } from '../utils.js';
 
 const router = express.Router();
 
@@ -7,6 +8,7 @@ const defaultUser = {
   password: 'test-password',
 };
 
+/** @type {import('express').CookieOptions} */
 const cookieTokenOptions = {
   httpOnly: true,
   path: '/commonTask',
@@ -16,8 +18,10 @@ const tokenKey = 'token';
 const validToken =
   'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJudm9yb2J5b3YiLCJleHAiOjE3MTI4MTczNjEsInJvbGUiOiJVU0VSIn0.8dQRJtlVkHqhyRLldnnHW_MQK6NSd--VJoAJjpWSMnGsOCV96Gk7SHwhPqiXO5IoR2YSFJz3T2za8sqjPTEusA';
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body ?? {};
+
+  await sleep(2);
 
   if (email !== defaultUser.email || password !== defaultUser.password) {
     return res.status(400).json({
@@ -45,11 +49,13 @@ export function commonTaskTokenCheck(req, res, next) {
   next();
 }
 
-router.get('/user', commonTaskTokenCheck, (req, res) => {
+router.get('/user', commonTaskTokenCheck, async (req, res) => {
+  await sleep(2);
   return res.json({ email: defaultUser.email });
 });
 
-router.delete('/logout', (req, res) => {
+router.delete('/logout', async (req, res) => {
+  await sleep(1);
   res.clearCookie(tokenKey, cookieTokenOptions).json({
     status: 'ok',
   });
