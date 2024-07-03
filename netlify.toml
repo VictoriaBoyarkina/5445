@@ -1,5 +1,11 @@
 [build]
+  functions = "functions"
   command = "npm start"
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+[[redirects]]
+  force = true
+  from = "/commonTask/*"
+  status = 200
+  to = "/.netlify/functions/index/:splat"
