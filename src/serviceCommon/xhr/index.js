@@ -1,55 +1,55 @@
-import express from "express";
+import express from 'express';
 
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import { isEqual } from "lodash-es";
-import { createReadStream } from "fs";
-import { stat } from "fs/promises";
-import { upload } from "../../utils.js";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { isEqual } from 'lodash-es';
+import { createReadStream } from 'fs';
+import { stat } from 'fs/promises';
+import { upload } from '../../utils.js';
 
 const router = express.Router();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   res.json([
     {
       id: 1,
-      name: "mouse",
+      name: 'mouse',
     },
     {
       id: 2,
-      name: "keyboard",
+      name: 'keyboard',
     },
     {
       id: 3,
-      name: "monitor",
+      name: 'monitor',
     },
   ]);
 });
 
-router.get("/file", async (req, res) => {
-  const imgUrl = __dirname + "/static/cat_gruzin.jpg";
+router.get('/file', async (req, res) => {
+  const imgUrl = __dirname + '/static/cat_gruzin.jpg';
 
   const size = (await stat(imgUrl)).size;
 
-  res.setHeader("Content-Type", "image/jpg");
-  res.setHeader("Content-Length", size);
+  res.setHeader('Content-Type', 'image/jpg');
+  res.setHeader('Content-Length', size);
 
   const readStream = createReadStream(imgUrl);
 
   readStream.pipe(res);
 
-  res.on("close", () => {
+  res.on('close', () => {
     readStream.destroy();
   });
 });
 
-router.post("/upload", upload.single("file"), (req, res) => {
+router.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({
       error: true,
-      message: "file is required",
+      message: 'file is required',
     });
   }
 
@@ -58,12 +58,12 @@ router.post("/upload", upload.single("file"), (req, res) => {
   });
 });
 
-router.put("/json", (req, res) => {
-  if (Array.isArray(req.body) || typeof req.body === "string" || !req.body) {
+router.put('/json', (req, res) => {
+  if (Array.isArray(req.body) || typeof req.body === 'string' || !req.body) {
     res.status(400);
     res.json({
       error: true,
-      message: "request body must be Object",
+      message: 'request body must be Object',
     });
     return;
   }
@@ -71,7 +71,7 @@ router.put("/json", (req, res) => {
   const body = req.body || {};
 
   res.json({
-    result: "success",
+    result: 'success',
     sendedJSON: {
       ...body,
       keysCount: Object.keys(body).length,
@@ -80,17 +80,17 @@ router.put("/json", (req, res) => {
 });
 
 const timestamp = Date.now();
-router.patch("/json", (req, res) => {
+router.patch('/json', (req, res) => {
   const body = req.body;
   const err = {
     err: true,
-    message: "Отправьте в body полученный JSON, чтобы избавиться от ошибки. ",
+    message: 'Отправьте в body полученный JSON, чтобы избавиться от ошибки. ',
     timestamp,
   };
 
   if (isEqual(err, body)) {
     res.json({
-      message: "success",
+      message: 'success',
     });
     return;
   }
@@ -99,26 +99,26 @@ router.patch("/json", (req, res) => {
   res.json(err);
 });
 
-router.delete("/delete/:id", (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   const id = req.params.id;
 
-  if (!["123", "test", "id", "awd"].includes(id)) {
+  if (!['123', 'test', 'id', 'awd'].includes(id)) {
     res.status(400);
     res.json({
-      message: "Придумай другой id",
+      message: 'Придумай другой id',
     });
     return;
   }
 
   res.json({
-    message: "success",
+    message: 'success',
   });
 });
 
-router.get("/long", (req, res) => {
+router.get('/long', (req, res) => {
   setTimeout(() => {
     res.json({
-      message: "success",
+      message: 'success',
     });
   }, 2000);
 });

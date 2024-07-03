@@ -1,27 +1,27 @@
-import { readFileSync } from "fs";
-import express from "express";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { readFileSync } from 'fs';
+import express from 'express';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 const router = express.Router();
 
-router.get("/redirect", (req, res) => {
+router.get('/redirect', (req, res) => {
   res.redirect(`${req.headers.referer}pages/afterRedirect`);
   res.end();
 });
 
-router.get("/static-page", (req, res) => {
-  const content = readFileSync(__dirname + "/static/index.html");
+router.get('/static-page', (req, res) => {
+  const content = readFileSync(__dirname + '/static/index.html');
 
-  res.setHeader("Content-Type", "text/html");
+  res.setHeader('Content-Type', 'text/html');
   res.writeHead(200);
   res.end(content);
 });
 
-router.post("/json", (req, res) => {
+router.post('/json', (req, res) => {
   const body = req.body || {};
 
   if (!body.type) {
@@ -37,17 +37,17 @@ router.post("/json", (req, res) => {
     res.status(400);
     res.json({
       error: true,
-      message: "В объекте должны быть ещё свойства кроме свойства `type`",
+      message: 'В объекте должны быть ещё свойства кроме свойства `type`',
     });
     return;
   }
 
-  if (body.type === "create") {
+  if (body.type === 'create') {
     res.status(201);
   }
 
   res.json({
-    status: "success",
+    status: 'success',
     data: body,
   });
 });
