@@ -3,3 +3,5 @@
 .env
 .yarn/install-state.gz
 .yarn/cache
+# Local Netlify folder
+.netlify
