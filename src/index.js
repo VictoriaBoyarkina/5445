@@ -23,17 +23,19 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 const app = express();
 const httpServer = createServer(app);
 
-app.use(cookieParser());
-app.use(cors());
-app.use(express.json());
-app.use(
+export const router = express.Router();
+
+router.use(cookieParser());
+router.use(cors());
+router.use(express.json());
+router.use(
   express.urlencoded({
     // to support URL-encoded bodies
     extended: true,
   }),
 );
 
-app.use((req, res, next) => {
+router.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', [CLIENT_URL]);
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -44,32 +46,32 @@ app.use((req, res, next) => {
 
 /* Mentor Task START */
 initSocket(app, httpServer);
-app.use('/commonTask/chartData', chartDataRouter);
-app.use('/commonTask/auth', authRouter);
-app.use('/commonTask/template', templateDataRouter);
+router.use('/commonTask/chartData', chartDataRouter);
+router.use('/commonTask/auth', authRouter);
+router.use('/commonTask/template', templateDataRouter);
 /* Mentor Task END */
 
 /* Browser Rare START */
-app.use('/notifications', notificationsRouter);
+router.use('/notifications', notificationsRouter);
 /* Browser Rare END */
 
 /* Service Common START */
-app.use('/http', httpRouter);
-app.use('/cookie', cookieRouter);
-app.use('/xhr', xhrRouter);
-app.use('/axios', axiosRouter);
+router.use('/http', httpRouter);
+router.use('/cookie', cookieRouter);
+router.use('/xhr', xhrRouter);
+router.use('/axios', axiosRouter);
 /* Service Common END */
 
 /* Service Rare START */
-app.use('/rxjs', rxjsRouter);
+router.use('/rxjs', rxjsRouter);
 /* Service Rare END */
 
 /* React Common START */
-app.use('/reactGuard', reactRoutingGuardsRouter);
+router.use('/reactGuard', reactRoutingGuardsRouter);
 /* React Common END */
 
 /* Ant Design Forms START */
-app.use('/ant-forms', antFormDictionariesRouter);
+router.use('/ant-forms', antFormDictionariesRouter);
 /* Ant Design Forms END */
 
 // httpServer.listen(PORT, () => {
